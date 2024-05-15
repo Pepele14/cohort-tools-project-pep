@@ -2,6 +2,10 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const {
+  errorHandler,
+  notFoundHandler,
+} = require("./middleware/error-handling");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -10,6 +14,10 @@ const ObjectId = Schema.Types.ObjectId;
 // INITIALIZE EXPRESS APP
 const app = express();
 const PORT = process.env.PORT || 5005;
+
+// Set up custom error handling middleware:
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 // Connect to MongoDB
 mongoose
